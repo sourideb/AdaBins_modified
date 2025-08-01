@@ -1,0 +1,10 @@
+scene1/img1.jpg scene1/predicted_depth1.png 518.8579
+scene2/img2.jpg scene2/predicted_depth2.png 518.8579
+scene3/img3.jpg scene3/predicted_depth3.png 518.8579
+scene4/img4.jpg scene4/predicted_depth4.png 518.8579
+scene5/img5.jpg scene5/predicted_depth5.png 518.8579
+scene6/img6.jpg scene6/predicted_depth6.png 518.8579
+scene7/img7.jpg scene7/predicted_depth7.png 518.8579
+scene8/img8.jpg scene8/predicted_depth8.png 518.8579
+scene9/img9.jpg scene9/predicted_depth9.png 518.8579
+scene10/img10.jpg scene10/predicted_depth10.png 518.8579

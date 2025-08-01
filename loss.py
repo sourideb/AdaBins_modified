@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from pytorch3d.loss import chamfer_distance
+#from pytorch3d.loss import chamfer_distance
 from torch.nn.utils.rnn import pad_sequence
 
 
@@ -24,7 +24,7 @@ class SILogLoss(nn.Module):  # Main loss function used in AdaBins paper
         Dg = torch.var(g) + 0.15 * torch.pow(torch.mean(g), 2)
         return 10 * torch.sqrt(Dg)
 
-
+"""
 class BinsChamferLoss(nn.Module):  # Bin centers regularizer used in AdaBins paper
     def __init__(self):
         super().__init__()
@@ -44,3 +44,4 @@ class BinsChamferLoss(nn.Module):  # Bin centers regularizer used in AdaBins pap
 
         loss, _ = chamfer_distance(x=input_points, y=target_points, y_lengths=target_lengths)
         return loss
+"""

@@ -1,0 +1,8 @@
+--filenames_file mini_train.txt
+--data_path ./nyu/sync/
+--gt_path ./nyu/sync/
+--epochs 2
+--bs 2
+--w_chamfer 0
+--validate_every 1
+

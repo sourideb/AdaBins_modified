@@ -2,6 +2,8 @@
 --data_path ./nyu/sync/
 --gt_path ./nyu/sync/
 --filenames_file_eval mini_test.txt
+--data_path_eval ./nyu/sync
+--gt_path_eval ./nyu/sync
 --epochs 2
 --bs 2
 --w_chamfer 0

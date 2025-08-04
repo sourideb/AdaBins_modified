@@ -1,6 +1,7 @@
 --filenames_file mini_train.txt
 --data_path ./nyu/sync/
 --gt_path ./nyu/sync/
+--filenames_file_eval mini_test.txt
 --epochs 2
 --bs 2
 --w_chamfer 0

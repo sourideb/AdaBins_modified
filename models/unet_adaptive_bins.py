@@ -120,9 +120,10 @@ class UnetAdaptiveBins(nn.Module):
 
     @classmethod
     def build(cls, n_bins, **kwargs):
+        print("\nControl is now inside build method\n")
         basemodel_name = 'tf_efficientnet_b5_ap'
 
-        print('Loading base model ()...'.format(basemodel_name), end='')
+        print('Loading base model {}...'.format(basemodel_name), end='')
         basemodel = torch.hub.load('rwightman/gen-efficientnet-pytorch', basemodel_name, pretrained=True)
         print('Done.')
 

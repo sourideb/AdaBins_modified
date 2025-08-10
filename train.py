@@ -82,6 +82,7 @@ def main_worker(gpu, ngpus_per_node, args):
     print("type(model): ",type(model))
 
     if args.gpu is not None:  # If a gpu is set by user: NO PARALLELISM!!
+        print("\nargs.gpu is not None\n")
         torch.cuda.set_device(args.gpu)
         model = model.cuda(args.gpu)
 
@@ -116,6 +117,7 @@ def main_worker(gpu, ngpus_per_node, args):
 
 def train(model, args, epochs=10, experiment_name="DeepLab", lr=0.0001, root=".", device=None,
           optimizer_state_dict=None):
+    print("\nControl inside train function\n")
     global PROJECT
     if device is None:
         device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')

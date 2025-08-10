@@ -404,6 +404,7 @@ if __name__ == '__main__':
     args.ngpus_per_node = ngpus_per_node
 
     if args.distributed:
+        print("\n\n\nControl entered args.distributed\n\n\n")
         args.world_size = ngpus_per_node * args.world_size
         mp.spawn(main_worker, nprocs=ngpus_per_node, args=(ngpus_per_node, args))
     else:

@@ -62,6 +62,7 @@ class Encoder(nn.Module):
     def __init__(self, backend):
         super(Encoder, self).__init__()
         self.original_model = backend
+        print("\nControl is now inside Encoder init function\n")
 
     def forward(self, x):
         features = [x]
@@ -76,6 +77,8 @@ class Encoder(nn.Module):
 
 class UnetAdaptiveBins(nn.Module):
     def __init__(self, backend, n_bins=100, min_val=0.1, max_val=10, norm='linear'):
+        print(type(self))
+        print("\nControl is now inside init of unetadaptivebins\n")
         super(UnetAdaptiveBins, self).__init__()
         self.num_classes = n_bins
         self.min_val = min_val

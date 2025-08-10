@@ -369,6 +369,9 @@ if __name__ == '__main__':
     else:
         args = parser.parse_args()
 
+    print(type(args))
+    print(args)
+
     args.batch_size = args.bs
     args.num_threads = args.workers
     args.mode = 'train'

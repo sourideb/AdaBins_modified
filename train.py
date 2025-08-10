@@ -67,7 +67,9 @@ def log_images(img, depth, pred, args, step):
 
 
 def main_worker(gpu, ngpus_per_node, args):
+    print("\nControl Entered main_worker function\n")
     args.gpu = gpu
+    print("\nCall to model start\n")
 
     ###################################### Load model ##############################################
 
@@ -75,6 +77,9 @@ def main_worker(gpu, ngpus_per_node, args):
                                           norm=args.norm)
 
     ################################################################################################
+
+    print("\nCall to model over\n")
+    print("type(model): ",type(model))
 
     if args.gpu is not None:  # If a gpu is set by user: NO PARALLELISM!!
         torch.cuda.set_device(args.gpu)
@@ -371,6 +376,7 @@ if __name__ == '__main__':
 
     print(type(args))
     print(args)
+    print(args.epochs)
 
     args.batch_size = args.bs
     args.num_threads = args.workers
@@ -409,6 +415,8 @@ if __name__ == '__main__':
     if args.distributed:
         print("\n\n\nControl entered args.distributed\n\n\n")
         args.world_size = ngpus_per_node * args.world_size
+        print("ngpus_per_node: ",ngpus_per_node)
+        print("args.world_size: ",args.world_size)
         mp.spawn(main_worker, nprocs=ngpus_per_node, args=(ngpus_per_node, args))
     else:
         if ngpus_per_node == 1:

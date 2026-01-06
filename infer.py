@@ -157,5 +157,5 @@ if __name__ == '__main__':
     inferHelper = InferenceHelper()
     centers, pred = inferHelper.predict_pil(img)
     print(f"took :{time() - start}s")
-    plt.imshow(pred.squeeze(), cmap='magma_r')
+    plt.imshow(pred[0][0], cmap='magma_r')
     plt.show()

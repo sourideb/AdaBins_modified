@@ -64,7 +64,7 @@ class ToTensor(object):
 
 
 class InferenceHelper:
-    def __init__(self, dataset='nyu', device='cuda:0'):
+    def __init__(self, dataset='nyu', device='cpu'):
         self.toTensor = ToTensor()
         self.device = device
         if dataset == 'nyu':
@@ -92,7 +92,10 @@ class InferenceHelper:
         img = np.asarray(pil_image) / 255.
 
         img = self.toTensor(img).unsqueeze(0).float().to(self.device)
+
+        print("\nCalling predict function\n")
         bin_centers, pred = self.predict(img)
+        print("\nExiting from predict function\n")
 
         if visualized:
             viz = utils.colorize(torch.from_numpy(pred).unsqueeze(0), vmin=None, vmax=None, cmap='magma')
@@ -103,12 +106,16 @@ class InferenceHelper:
 
     @torch.no_grad()
     def predict(self, image):
+        print("\nCall to model forward function\n")
         bins, pred = self.model(image)
+        print("\nExiting model forward pass\n")
         pred = np.clip(pred.cpu().numpy(), self.min_depth, self.max_depth)
 
         # Flip
         image = torch.Tensor(np.array(image.cpu().numpy())[..., ::-1].copy()).to(self.device)
+        print("\nCall to model forward function 2nd time\n")
         pred_lr = self.model(image)[-1]
+        print("\nExiting model forward function\n")
         pred_lr = np.clip(pred_lr.cpu().numpy()[..., ::-1], self.min_depth, self.max_depth)
 
         # Take average of original and mirror
@@ -152,10 +159,14 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from time import time
 
-    img = Image.open("test_imgs/classroom__rgb_00283.jpg")
+    img = Image.open("./test_imgs/classroom__rgb_00283.jpg")
     start = time()
+    print("\nGoing inside inferncehelper object creation\n")
     inferHelper = InferenceHelper()
+    print("\nComing out after object creation\n")
+    print("\nCalling predict_pil\n")
     centers, pred = inferHelper.predict_pil(img)
+    print("\nComing out from predict_pil\n")
     print(f"took :{time() - start}s")
     plt.imshow(pred[0][0], cmap='magma_r')
     plt.savefig("output.png")

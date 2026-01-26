@@ -303,6 +303,7 @@ if __name__ == '__main__':
     # Arguments
     parser = argparse.ArgumentParser(description='Training script. Default values of all arguments are recommended for reproducibility', fromfile_prefix_chars='@',
                                      conflict_handler='resolve')
+    print(parser)
     parser.convert_arg_line_to_args = convert_arg_line_to_args
     parser.add_argument('--epochs', default=25, type=int, help='number of total epochs to run')
     parser.add_argument('--n-bins', '--n_bins', default=80, type=int,
@@ -384,7 +385,9 @@ if __name__ == '__main__':
     args.num_threads = args.workers
     args.mode = 'train'
     args.chamfer = args.w_chamfer > 0
+    print(args.chamfer)
     if args.root != "." and not os.path.isdir(args.root):
+        print("hi")
         os.makedirs(args.root)
 
     try:
@@ -415,7 +418,7 @@ if __name__ == '__main__':
     args.ngpus_per_node = ngpus_per_node
 
     if args.distributed:
-        print("\n\n\nControl entered args.distributed\n\n\n")
+        print("\nControl entered args.distributed\n")
         args.world_size = ngpus_per_node * args.world_size
         print("ngpus_per_node: ",ngpus_per_node)
         print("args.world_size: ",args.world_size)

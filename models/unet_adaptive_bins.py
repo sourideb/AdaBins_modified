@@ -2,7 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .miniViT import mViT
+#from .miniViT import mViT
+from .mSwin import mSwin
 
 
 class UpSampleBN(nn.Module):
@@ -77,6 +78,7 @@ class Encoder(nn.Module):
 
 class UnetAdaptiveBins(nn.Module):
     def __init__(self, backend, n_bins=100, min_val=0.1, max_val=10, norm='linear'):
+        #print(backend)
         print(type(self))
         print("\nControl is now inside init of unetadaptivebins\n")
         super(UnetAdaptiveBins, self).__init__()
@@ -84,9 +86,16 @@ class UnetAdaptiveBins(nn.Module):
         self.min_val = min_val
         self.max_val = max_val
         self.encoder = Encoder(backend)
-        self.adaptive_bins_layer = mViT(128, n_query_channels=128, patch_size=16,
+        # self.adaptive_bins_layer = mViT(128, n_query_channels=128, patch_size=16,
+        #                                 dim_out=n_bins,
+        #                                 embedding_dim=128, norm=norm)
+        self.adaptive_bins_layer = mSwin(128,
+                                        n_query_channels=128,
                                         dim_out=n_bins,
-                                        embedding_dim=128, norm=norm)
+                                        embedding_dim=128,
+                                        norm=norm
+        )
+
 
         self.decoder = DecoderBN(num_classes=128)
         self.conv_out = nn.Sequential(nn.Conv2d(128, n_bins, kernel_size=1, stride=1, padding=0),
@@ -94,7 +103,10 @@ class UnetAdaptiveBins(nn.Module):
 
     def forward(self, x, **kwargs):
         unet_out = self.decoder(self.encoder(x), **kwargs)
+        print(unet_out.shape)
+        print(type(self.adaptive_bins_layer))
         bin_widths_normed, range_attention_maps = self.adaptive_bins_layer(unet_out)
+        
         out = self.conv_out(range_attention_maps)
 
         # Post process

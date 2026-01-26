@@ -21,7 +21,10 @@ class mViT(nn.Module):
                                        nn.Linear(256, dim_out))
 
     def forward(self, x):
-        # n, c, h, w = x.size()
+        print(type(x)," inside forwward() of miniViT")
+        n, c, h, w = x.size()
+        print([n,c,h,w])
+
         tgt = self.patch_transformer(x.clone())  # .shape = S, N, E
 
         x = self.conv3x3(x)

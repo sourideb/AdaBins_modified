@@ -159,7 +159,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from time import time
 
-    img = Image.open("./test_imgs/classroom__rgb_00283.jpg")
+    img = Image.open("./test_imgs/test2.jpg")
     start = time()
     print("\nGoing inside inferncehelper object creation\n")
     inferHelper = InferenceHelper()

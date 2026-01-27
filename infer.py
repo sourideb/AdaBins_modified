@@ -107,6 +107,7 @@ class InferenceHelper:
     @torch.no_grad()
     def predict(self, image):
         print("\nCall to model forward function\n")
+        #Actual call to model for forward pass
         bins, pred = self.model(image)
         print("\nExiting model forward pass\n")
         pred = np.clip(pred.cpu().numpy(), self.min_depth, self.max_depth)
@@ -114,6 +115,7 @@ class InferenceHelper:
         # Flip
         image = torch.Tensor(np.array(image.cpu().numpy())[..., ::-1].copy()).to(self.device)
         print("\nCall to model forward function 2nd time\n")
+        #Actual call to model 2nd time for forward pass
         pred_lr = self.model(image)[-1]
         print("\nExiting model forward function\n")
         pred_lr = np.clip(pred_lr.cpu().numpy()[..., ::-1], self.min_depth, self.max_depth)

@@ -377,9 +377,9 @@ if __name__ == '__main__':
     else:
         args = parser.parse_args()
 
-    print(type(args)+" line 380 in train.py")
-    print(args+" line 381 in train.py")
-    print(args.epochs+" line 382 in train.py")
+    print(type(args)," line 380 in train.py")
+    print(args," line 381 in train.py")
+    print(args.epochs," line 382 in train.py")
 
     args.batch_size = args.bs
     args.num_threads = args.workers

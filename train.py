@@ -303,7 +303,7 @@ if __name__ == '__main__':
     # Arguments
     parser = argparse.ArgumentParser(description='Training script. Default values of all arguments are recommended for reproducibility', fromfile_prefix_chars='@',
                                      conflict_handler='resolve')
-    print(parser+" line 306 in train.py")
+    print(parser," line 306 in train.py")
     parser.convert_arg_line_to_args = convert_arg_line_to_args
     parser.add_argument('--epochs', default=25, type=int, help='number of total epochs to run')
     parser.add_argument('--n-bins', '--n_bins', default=80, type=int,

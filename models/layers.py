@@ -28,9 +28,19 @@ class PixelWiseDotProduct(nn.Module):
     def __init__(self):
         super(PixelWiseDotProduct, self).__init__()
 
+    """
     def forward(self, x, K):
         n, c, h, w = x.size()
         _, cout, ck = K.size()
         assert c == ck, "Number of channels in x and Embedding dimension (at dim 2) of K matrix must match"
         y = torch.matmul(x.view(n, c, h * w).permute(0, 2, 1), K.permute(0, 2, 1))  # .shape = n, hw, cout
+        return y.permute(0, 2, 1).view(n, cout, h, w)
+    """
+
+    def forward(self, x, K):
+        n, c, h, w = x.size()
+        _, cout, ck = K.size()
+        assert c == ck, "Number of channels in x and Embedding dimension (at dim 2) of K matrix must match"
+        x = x.contiguous()
+        y = torch.matmul(x.view(n, c, h * w).permute(0, 2, 1), K.permute(0, 2, 1))
         return y.permute(0, 2, 1).view(n, cout, h, w)

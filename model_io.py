@@ -68,5 +68,5 @@ def load_checkpoint(fpath, model, optimizer=None):
         else:
             modified[k] = v  # else keep the original
 
-    model.load_state_dict(modified) #use strict=False when using adabins weights on swin architecture
+    model.load_state_dict(modified, strict=False) #use strict=False when using adabins weights on swin architecture
     return model, optimizer, epoch

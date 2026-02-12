@@ -3,8 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 #from .miniViT import mViT
-from .mSwin import mSwin
-
+#from .mSwin import mSwin
+#from .swin_miniViT import SwinMiniViT
+from .miniSwin import SwinBins
 
 class UpSampleBN(nn.Module):
     def __init__(self, skip_input, output_features):
@@ -89,13 +90,25 @@ class UnetAdaptiveBins(nn.Module):
         # self.adaptive_bins_layer = mViT(128, n_query_channels=128, patch_size=16,
         #                                 dim_out=n_bins,
         #                                 embedding_dim=128, norm=norm)
-        self.adaptive_bins_layer = mSwin(128,
-                                        n_query_channels=128,
-                                        dim_out=n_bins,
-                                        embedding_dim=128,
-                                        norm=norm
-        )
-
+        # self.adaptive_bins_layer = mSwin(128,
+        #                                 n_query_channels=128,
+        #                                 dim_out=n_bins,
+        #                                 embedding_dim=128,
+        #                                 norm=norm
+        # )
+        # self.adaptive_bins_layer = SwinMiniViT(
+        #                                         in_channels=128,
+        #                                         n_bins=n_bins,
+        #                                         dim_out=n_bins,
+        #                                         norm=norm
+        #                                     )
+        self.adaptive_bins_layer = SwinBins(
+                                            128,
+                                            n_query_channels=128,
+                                            dim_out=n_bins,
+                                            embedding_dim=128,
+                                            norm=norm
+                                        )
 
         self.decoder = DecoderBN(num_classes=128)
         self.conv_out = nn.Sequential(nn.Conv2d(128, n_bins, kernel_size=1, stride=1, padding=0),

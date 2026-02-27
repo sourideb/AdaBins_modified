@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from pytorch3d.loss import chamfer_distance
+#from pytorch3d.loss import chamfer_distance
 from torch.nn.utils.rnn import pad_sequence
 
 
@@ -24,7 +24,7 @@ class SILogLoss(nn.Module):  # Main loss function used in AdaBins paper
         Dg = torch.var(g) + 0.15 * torch.pow(torch.mean(g), 2)
         return 10 * torch.sqrt(Dg)
 
-
+"""
 class BinsChamferLoss(nn.Module):  # Bin centers regularizer used in AdaBins paper
     def __init__(self):
         super().__init__()
@@ -44,4 +44,41 @@ class BinsChamferLoss(nn.Module):  # Bin centers regularizer used in AdaBins pap
 
         loss, _ = chamfer_distance(x=input_points, y=target_points, y_lengths=target_lengths)
         return loss
+"""
 
+class BinsChamferLoss(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.name = "ChamferLoss"
+
+    def forward(self, bins, target_depth_maps):
+        # bins: (B, N+1)
+        # target_depth_maps: (B, 1, H, W)
+
+        # Compute bin centers
+        bin_centers = 0.5 * (bins[:, 1:] + bins[:, :-1])  # (B, N)
+
+        B, N = bin_centers.shape
+        loss = 0.0
+
+        for b in range(B):
+            pred_points = bin_centers[b]  # (N,)
+            gt_points = target_depth_maps[b].flatten()
+
+            # remove invalid depths
+            gt_points = gt_points[gt_points > 1e-3]
+
+            if len(gt_points) == 0:
+                continue
+
+            # Compute pairwise distance
+            diff = pred_points.unsqueeze(1) - gt_points.unsqueeze(0)
+            dist = torch.abs(diff)
+
+            # Chamfer distance
+            loss_pred = torch.min(dist, dim=1)[0].mean()
+            loss_gt = torch.min(dist, dim=0)[0].mean()
+
+            loss += loss_pred + loss_gt
+
+        return loss / B

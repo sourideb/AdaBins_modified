@@ -18,8 +18,8 @@ import model_io
 import models
 import utils
 from dataloader import DepthDataLoader
-from loss import SILogLoss
-BinsChamferLoss=None
+from loss import SILogLoss,BinsChamferLoss
+#BinsChamferLoss=None
 from utils import RunningAverage, colorize
 
 # os.environ['WANDB_MODE'] = 'dryrun'

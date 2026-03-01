@@ -1,4 +1,4 @@
---bs 16
+--bs 4
 --dataset kitti
 
 --lr 0.000357
@@ -6,7 +6,7 @@
 --div_factor 25
 --final_div_factor 100
 --epochs 25
---workers 11
+--workers 4
 --name UnetAdaptiveBins
 --n_bins 256
 --norm=linear

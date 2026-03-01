@@ -1,4 +1,4 @@
---bs 4
+--bs 2
 --dataset kitti
 
 --lr 0.000357
@@ -8,7 +8,7 @@
 --epochs 25
 --workers 4
 --name UnetAdaptiveBins
---n_bins 256
+--n_bins 80
 --norm=linear
 --w_chamfer 0.1
 --data_path /kaggle/input/datasets/awsaf49/kitti-eigen-split-dataset/train/

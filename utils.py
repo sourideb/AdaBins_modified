@@ -43,6 +43,8 @@ class RunningAverageDict:
             self._dict[key].append(value)
 
     def get_value(self):
+        if self._dict is None:
+            return {}
         return {key: value.get_value() for key, value in self._dict.items()}
 
 

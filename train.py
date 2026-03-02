@@ -11,6 +11,10 @@ import torch.multiprocessing as mp
 import torch.nn as nn
 import torch.optim as optim
 import torch.utils.data.distributed
+
+torch.backends.cudnn.benchmark = True
+
+
 import wandb
 from tqdm import tqdm 
 
@@ -206,6 +210,10 @@ def train(model, args, epochs=10, experiment_name="DeepLab", lr=0.0001, root="."
             loss.backward()
             nn.utils.clip_grad_norm_(model.parameters(), 0.1)  # optional
             optimizer.step()
+
+            del bin_edges, pred, loss
+            torch.cuda.empty_cache()
+            
             if should_log and step % 5 == 0:
                 wandb.log({f"Train/{criterion_ueff.name}": l_dense.item()}, step=step)
                 wandb.log({f"Train/{criterion_bins.name}": l_chamfer.item()}, step=step)

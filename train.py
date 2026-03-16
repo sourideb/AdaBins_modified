@@ -182,6 +182,8 @@ def train(model, args, epochs=10, experiment_name="DeepLab", lr=0.0001, root="."
 
     # max_iter = len(train_loader) * epochs
     for epoch in range(args.epoch, epochs):
+        if args.distributed:
+            train_loader.sampler.set_epoch(epoch)
         ################################# Train loop ##########################################################
         if should_log: wandb.log({"Epoch": epoch}, step=step)
         for i, batch in tqdm(enumerate(train_loader), desc=f"Epoch: {epoch + 1}/{epochs}. Loop: Train",
@@ -213,7 +215,7 @@ def train(model, args, epochs=10, experiment_name="DeepLab", lr=0.0001, root="."
 
             del bin_edges, pred, loss
             torch.cuda.empty_cache()
-            
+
             if should_log and step % 5 == 0:
                 wandb.log({f"Train/{criterion_ueff.name}": l_dense.item()}, step=step)
                 wandb.log({f"Train/{criterion_bins.name}": l_chamfer.item()}, step=step)
@@ -293,7 +295,7 @@ def validate(args, model, test_loader, criterion_ueff, epoch, epochs, device='cp
                         int(0.0359477 * gt_width):int(0.96405229 * gt_width)] = 1
                     else:
                         eval_mask[45:471, 41:601] = 1
-            valid_mask = np.logical_and(valid_mask, eval_mask)
+                valid_mask = np.logical_and(valid_mask, eval_mask)
             metrics.update(utils.compute_errors(gt_depth[valid_mask], pred[valid_mask]))
 
         return metrics.get_value(), val_si
@@ -412,7 +414,10 @@ if __name__ == '__main__':
         nodes = ["127.0.0.1"]
 
     if args.distributed:
-        mp.set_start_method('forkserver')
+        try:
+            mp.set_start_method('forkserver')
+        except RuntimeError:
+            pass
 
         print(args.rank)
         port = np.random.randint(15000, 15025)

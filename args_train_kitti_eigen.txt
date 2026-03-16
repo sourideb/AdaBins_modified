@@ -1,4 +1,4 @@
---bs 2
+--bs 4
 --dataset kitti
 
 --lr 0.000357

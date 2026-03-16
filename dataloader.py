@@ -38,7 +38,8 @@ class DepthDataLoader(object):
                                    shuffle=(self.train_sampler is None),
                                    num_workers=args.num_threads,
                                    pin_memory=True,
-                                   sampler=self.train_sampler)
+                                   sampler=self.train_sampler,
+                                   drop_last=True)
 
         elif mode == 'online_eval':
             self.testing_samples = DataLoadPreprocess(args, mode, transform=preprocessing_transforms(mode))

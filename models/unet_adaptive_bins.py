@@ -64,7 +64,6 @@ class Encoder(nn.Module):
     def __init__(self, backend):
         super(Encoder, self).__init__()
         self.original_model = backend
-        print("\nControl is now inside Encoder init function\n")
 
     def forward(self, x):
         features = [x]
@@ -79,9 +78,6 @@ class Encoder(nn.Module):
 
 class UnetAdaptiveBins(nn.Module):
     def __init__(self, backend, n_bins=100, min_val=0.1, max_val=10, norm='linear'):
-        #print(backend)
-        print(type(self))
-        print("\nControl is now inside init of unetadaptivebins\n")
         super(UnetAdaptiveBins, self).__init__()
         self.num_classes = n_bins
         self.min_val = min_val
@@ -116,8 +112,6 @@ class UnetAdaptiveBins(nn.Module):
 
     def forward(self, x, **kwargs):
         unet_out = self.decoder(self.encoder(x), **kwargs)
-        print(unet_out.shape)
-        print(type(self.adaptive_bins_layer))
         bin_widths_normed, range_attention_maps = self.adaptive_bins_layer(unet_out)
         
         out = self.conv_out(range_attention_maps)
@@ -148,7 +142,6 @@ class UnetAdaptiveBins(nn.Module):
 
     @classmethod
     def build(cls, n_bins, **kwargs):
-        print("\nControl is now inside build method\n")
         basemodel_name = 'tf_efficientnet_b5_ap'
 
         print('Loading base model {}...'.format(basemodel_name), end='')
@@ -171,4 +164,4 @@ if __name__ == '__main__':
     model = UnetAdaptiveBins.build(100)
     x = torch.rand(2, 3, 480, 640)
     bins, pred = model(x)
-    print(bins.shape, pred.shape)
+    print(f"bins: {bins.shape}  pred: {pred.shape}")

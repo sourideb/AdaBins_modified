@@ -12,7 +12,8 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.utils.data.distributed
 
-torch.backends.cudnn.benchmark = True
+torch.backends.cudnn.benchmark = False
+torch.backends.cudnn.deterministic = True
 
 
 import wandb

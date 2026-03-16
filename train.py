@@ -313,6 +313,7 @@ def validate(args, model, test_loader, criterion_ueff, epoch, epochs,
     with torch.no_grad():
         val_si = RunningAverage()
         metrics = utils.RunningAverageDict()
+        skipped = 0
 
         val_iter = (
             enumerate(tqdm(test_loader, desc=f"Epoch: {epoch + 1}/{epochs}. Loop: Validation"))
@@ -321,13 +322,22 @@ def validate(args, model, test_loader, criterion_ueff, epoch, epochs,
         )
 
         for i, batch in val_iter:
+            # Check has_valid_depth FIRST — before touching depth at all.
+            # The dataloader sets depth_gt=False (Python bool) when GT is missing,
+            # which collates to a zero tensor. We must skip these early.
+            if 'has_valid_depth' in batch:
+                hvd = batch['has_valid_depth']
+                # Handle both plain Python bool (from dataloader) and tensor
+                if isinstance(hvd, torch.Tensor):
+                    valid = hvd.item()
+                else:
+                    valid = bool(hvd)
+                if not valid:
+                    skipped += 1
+                    continue
+
             img = batch['image'].to(device)
             depth = batch['depth'].to(device)
-
-            # BUG FIX: use .item() to convert tensor to Python bool
-            if 'has_valid_depth' in batch:
-                if not batch['has_valid_depth'].item():
-                    continue
 
             depth = depth.squeeze().unsqueeze(0).unsqueeze(0)
             bins, pred = model(img)
@@ -374,6 +384,10 @@ def validate(args, model, test_loader, criterion_ueff, epoch, epochs,
             # Log images for the very first validation batch only
             if should_log and i == 0:
                 log_images(img[0], depth[0], pred_np, args, step)
+
+        if skipped > 0:
+            print(f"[Validation] Skipped {skipped} batches (no valid GT depth). "
+                  f"Evaluated on {i + 1 - skipped}/{i + 1} batches.")
 
         return metrics.get_value(), val_si
 

@@ -77,8 +77,8 @@ class InferenceHelper:
             self.min_depth = 1e-3
             self.max_depth = 80
             self.saving_factor = 256
-            model = UnetAdaptiveBins.build(n_bins=256, min_val=self.min_depth, max_val=self.max_depth)
-            pretrained_path = "./pretrained/AdaBins_kitti.pt"
+            model = UnetAdaptiveBins.build(n_bins=80, min_val=self.min_depth, max_val=self.max_depth)
+            pretrained_path = "./pretrained/UnetAdaptiveBins_16-Mar_12-57-nodebs4-tep25-lr0.000357-wd0.1-1e1814d6-76eb-41cd-9adb-7af16270e9df_best.pt"
         else:
             raise ValueError("dataset can be either 'nyu' or 'kitti' but got {}".format(dataset))
 
@@ -161,10 +161,10 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from time import time
 
-    img = Image.open("./test_imgs/test2.jpg")
+    img = Image.open("./test_imgs/kittipic2.jpg")
     start = time()
     print("\nGoing inside inferncehelper object creation\n")
-    inferHelper = InferenceHelper()
+    inferHelper = InferenceHelper(dataset='kitti')
     print("\nComing out after object creation\n")
     print("\nCalling predict_pil\n")
     centers, pred = inferHelper.predict_pil(img)

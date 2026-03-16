@@ -6,6 +6,7 @@
 --input_width 1241
 --min_depth 1e-3
 --max_depth 80
+--n_bins 80 
 
 --data_path_eval ../dataset/kitti/raw/
 --gt_path_eval ../dataset/kitti/gts/

@@ -161,7 +161,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from time import time
 
-    img = Image.open("./test_imgs/kittipic2.jpg")
+    img = Image.open("./test_imgs/kittipic4.jpg")
     start = time()
     print("\nGoing inside inferncehelper object creation\n")
     inferHelper = InferenceHelper(dataset='kitti')
@@ -170,6 +170,6 @@ if __name__ == '__main__':
     centers, pred = inferHelper.predict_pil(img)
     print("\nComing out from predict_pil\n")
     print(f"took :{time() - start}s")
-    plt.imshow(pred[0][0], cmap='magma_r')
+    plt.imshow(pred[0][0], cmap='plasma')
     plt.savefig("output.png")
     plt.show()

@@ -1,4 +1,4 @@
---bs 4
+--bs 8
 --dataset kitti
 
 --lr 0.000357
@@ -27,4 +27,4 @@
 --max_depth_eval 80
 --do_kb_crop
 --garg_crop
---validate_every 1200
+--validate_every 200

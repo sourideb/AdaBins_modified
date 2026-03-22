@@ -6,7 +6,7 @@
 --div_factor 25
 --final_div_factor 100
 --epochs 25
---workers 1
+--workers 2
 --name UnetAdaptiveBins
 --n_bins 80
 --norm=linear

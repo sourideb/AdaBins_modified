@@ -6,7 +6,7 @@
 --div_factor 25
 --final_div_factor 100
 --epochs 25
---workers 4
+--workers 2
 --name UnetAdaptiveBins
 --n_bins 80
 --norm=linear
@@ -28,4 +28,3 @@
 --do_kb_crop
 --garg_crop
 --validate_every 200
---resume /kaggle/input/datasets/souridebmajumder/kitti-1epoch-trained-checkpoint/UnetAdaptiveBins_16-Mar_12-57-nodebs4-tep25-lr0.000357-wd0.1-1e1814d6-76eb-41cd-9adb-7af16270e9df_best.pt

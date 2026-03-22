@@ -161,7 +161,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from time import time
 
-    img = Image.open("./test_imgs/kittipic4.jpg")
+    img = Image.open("./test_imgs/kittipic5.jpg")
     start = time()
     print("\nGoing inside inferncehelper object creation\n")
     inferHelper = InferenceHelper(dataset='kitti')

@@ -7,6 +7,7 @@ import torch.nn.functional as F
 #from .swin_miniViT import SwinMiniViT
 from .miniSwin import SwinBins
 #from .swinv1 import SwinBins
+from .cbam import CBAM
 
 class UpSampleBN(nn.Module):
     def __init__(self, skip_input, output_features):
@@ -106,7 +107,7 @@ class UnetAdaptiveBins(nn.Module):
                                             embedding_dim=128,
                                             norm=norm
                                         )
-
+        self.cbam = CBAM(channels=128, r=8)
         self.decoder = DecoderBN(num_classes=128)
         self.conv_out = nn.Sequential(nn.Conv2d(128, n_bins, kernel_size=1, stride=1, padding=0),
                                       nn.Softmax(dim=1))
@@ -114,7 +115,7 @@ class UnetAdaptiveBins(nn.Module):
     def forward(self, x, **kwargs):
         unet_out = self.decoder(self.encoder(x), **kwargs)
         bin_widths_normed, range_attention_maps = self.adaptive_bins_layer(unet_out)
-        
+        range_attention_maps = self.cbam(range_attention_maps)
         out = self.conv_out(range_attention_maps)
 
         # Post process
@@ -137,7 +138,7 @@ class UnetAdaptiveBins(nn.Module):
         return self.encoder.parameters()
 
     def get_10x_lr_params(self):  # lr learning rate
-        modules = [self.decoder, self.adaptive_bins_layer, self.conv_out]
+        modules = [self.decoder, self.adaptive_bins_layer, self.cbam, self.conv_out]
         for m in modules:
             yield from m.parameters()
 

@@ -27,4 +27,4 @@
 --max_depth_eval 80
 --do_kb_crop
 --garg_crop
---validate_every 400
+--validate_every 500

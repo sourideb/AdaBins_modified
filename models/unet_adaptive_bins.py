@@ -114,8 +114,8 @@ class UnetAdaptiveBins(nn.Module):
 
     def forward(self, x, **kwargs):
         unet_out = self.decoder(self.encoder(x), **kwargs)
+        unet_out = self.cbam(unet_out)
         bin_widths_normed, range_attention_maps = self.adaptive_bins_layer(unet_out)
-        range_attention_maps = self.cbam(range_attention_maps)
         out = self.conv_out(range_attention_maps)
 
         # Post process

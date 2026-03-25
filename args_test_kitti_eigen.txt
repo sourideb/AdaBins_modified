@@ -16,5 +16,5 @@
 --garg_crop
 --do_kb_crop
 --dataset kitti
---checkpoint_path /kaggle/input/datasets/souridebmajumder/kitti-2-epoch-checkpoint/UnetAdaptiveBins_22-Mar_14-11-nodebs6-tep25-lr0.000357-wd0.1-a490e282-f6d1-455b-b22f-3c79e11a592f_best.pt
+--checkpoint_path /kaggle/input/datasets/souridebmajumder/cbam-1-epoch-checkpoint/cbam_1_epoch_checkpoint.pt
 --save_dir predictions_kitti

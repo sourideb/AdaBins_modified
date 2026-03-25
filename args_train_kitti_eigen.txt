@@ -28,3 +28,4 @@
 --do_kb_crop
 --garg_crop
 --validate_every 500
+--resume /kaggle/input/datasets/souridebmajumder/kitti-2epoch-chekpoint/UnetAdaptiveBins_22-Mar_14-11-nodebs6-tep25-lr0.000357-wd0.1-a490e282-f6d1-455b-b22f-3c79e11a592f_best.pt

@@ -78,7 +78,7 @@ class InferenceHelper:
             self.max_depth = 80
             self.saving_factor = 256
             model = UnetAdaptiveBins.build(n_bins=80, min_val=self.min_depth, max_val=self.max_depth)
-            pretrained_path = "./pretrained/UnetAdaptiveBins_16-Mar_12-57-nodebs4-tep25-lr0.000357-wd0.1-1e1814d6-76eb-41cd-9adb-7af16270e9df_best.pt"
+            pretrained_path = "./pretrained/cbam_1_epoch_checkpoint.pt"
         else:
             raise ValueError("dataset can be either 'nyu' or 'kitti' but got {}".format(dataset))
 

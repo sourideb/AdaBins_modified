@@ -1,3 +1,11 @@
+f = open(".\\train_test_inputs\\nju2k_test_files_with_gt.txt","r")
+
+mainList = f.readlines()
+
+print(len(mainList))
+
+
+"""
 f = open(r".\train_test_inputs\kitti_eigen_test_files_with_gt.txt","r")
 
 mainList = f.readlines()
@@ -18,10 +26,9 @@ for line in mainList:
         f.write(finalstr)
 
 f.close()
-
-
 """
 
+"""
 f = open(r".\train_test_inputs\kitti_eigen_train_files_with_gt.txt","r")
 
 mainList = f.readlines()
@@ -39,5 +46,4 @@ for line in mainList:
     f.write(finalstr)
 
 f.close()
-
 """

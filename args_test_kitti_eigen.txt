@@ -16,5 +16,5 @@
 --garg_crop
 --do_kb_crop
 --dataset kitti
---checkpoint_path /kaggle/input/datasets/souridebmajumder/cbam-on-unet-out-2-epoch-checkpoint/cbam_on_unet_out_2_epoch_checkpoint.pt
+--checkpoint_path /kaggle/input/datasets/souridebmajumder/3-epoch-checkpoint/3_epoch_checkpoint.pt
 --save_dir predictions_kitti

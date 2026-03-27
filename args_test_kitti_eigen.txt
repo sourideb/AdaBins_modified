@@ -16,5 +16,5 @@
 --garg_crop
 --do_kb_crop
 --dataset kitti
---checkpoint_path /kaggle/input/datasets/souridebmajumder/3-epoch-checkpoint/3_epoch_checkpoint.pt
+--checkpoint_path /kaggle/input/datasets/souridebmajumder/swinv1-2-epoch-checkpoint/swinv1_2_epoch_checkpoint_best.pt
 --save_dir predictions_kitti

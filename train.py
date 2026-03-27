@@ -280,14 +280,26 @@ def train(model, args, epochs=10, experiment_name="DeepLab", lr=0.0001, root="."
                     args, model, test_loader, criterion_ueff,
                     epoch, epochs, device, should_log, step
                 )
+                
+                # Always print metrics to console regardless of WandB logging
+                if should_write:
+                    print(f"\nEpoch: {epoch + 1}/{epochs}  Step: {step}  "
+                          f"Val Loss: {val_si.get_value():.4f}")
+                    print("  Metrics: " +
+                          "  ".join(f"{k}: {round(v, 4)}" for k, v in metrics.items()))
 
                 if should_log:
                     wandb.log({
                         f"Test/{criterion_ueff.name}": val_si.get_value(),
                     }, step=step)
                     wandb.log({f"Metrics/{k}": v for k, v in metrics.items()}, step=step)
+
+                # FIX 1: Save latest checkpoint unconditionally (not just when WandB is on).
+                # FIX 2: Save epoch+1 so that resuming starts from the NEXT epoch,
+                #         not the already-completed one.
+                if should_write:
                     model_io.save_checkpoint(
-                        model, optimizer, epoch,
+                        model, optimizer, epoch + 1,
                         f"{experiment_name}_{run_id}_latest.pt",
                         root=os.path.join(root, "checkpoints")
                     )
@@ -296,7 +308,7 @@ def train(model, args, epochs=10, experiment_name="DeepLab", lr=0.0001, root="."
                     print("Warning: metrics dict is empty, skipping best-model checkpoint check.")
                 elif metrics['abs_rel'] < best_loss and should_write:
                     model_io.save_checkpoint(
-                        model, optimizer, epoch,
+                        model, optimizer, epoch + 1,
                         f"{experiment_name}_{run_id}_best.pt",
                         root=os.path.join(root, "checkpoints")
                     )

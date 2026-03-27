@@ -28,3 +28,4 @@
 --do_kb_crop
 --garg_crop
 --validate_every 400
+--resume /kaggle/input/datasets/souridebkrishna/swinv1-2-epoch-checkpoint/swinv1_2_epoch_checkpoint_best.pt

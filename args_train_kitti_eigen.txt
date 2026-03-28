@@ -28,4 +28,4 @@
 --do_kb_crop
 --garg_crop
 --validate_every 416
---resume /kaggle/input/datasets/souridebkrishna/3-epoch-trained-checkpoint/UnetAdaptiveBins_27-Mar_20-00-nodebs6-tep25-lr0.000357-wd0.1-c2fe81c1-5b9f-414e-a443-0238f8ed6ec0_latest.pt
+--resume /kaggle/input/datasets/souridebkrishna/final-12-epoch-best-abc/final_12_epoch_best.pt

@@ -5,8 +5,8 @@ import torch.nn.functional as F
 #from .miniViT import mViT
 #from .mSwin import mSwin
 #from .swin_miniViT import SwinMiniViT
-#from .miniSwin import SwinBins
-from .swinv1 import SwinBins
+from .miniSwin import SwinBins
+#from .swinv1 import SwinBins
 #from .cbam import CBAM
 
 class UpSampleBN(nn.Module):

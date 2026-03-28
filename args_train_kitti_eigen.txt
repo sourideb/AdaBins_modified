@@ -28,4 +28,3 @@
 --do_kb_crop
 --garg_crop
 --validate_every 416
---resume /kaggle/input/datasets/souridebkrishna/final-12-epoch-best-abc/final_12_epoch_best.pt
